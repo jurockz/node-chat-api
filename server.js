@@ -18,6 +18,7 @@ const io = new Server(expressServer, {
   cors: {
     origin: "*",
   },
+  path: "/chat/api/socket.io/",
 });
 
 setupChatSocket(io);
