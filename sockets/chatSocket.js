@@ -1,12 +1,14 @@
 import { addMessage } from "../controllers/chatController.js";
 
 export const setupChatSocket = (io) => {
-  io.on("connection", (socket) => {
+  const chatNamespace = io.of("/chat/api");
+
+  chatNamespace.on("connection", (socket) => {
     console.log("A user connected");
 
     socket.on("sendMessage", (messageGroup) => {
       addMessage(messageGroup);
-      io.emit("all", messageGroup);
+      chatNamespace.emit("all", messageGroup);
     });
 
     socket.on("disconnect", () => {
