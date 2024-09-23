@@ -11,12 +11,15 @@ export const getMessages = async (req, res) => {
 
 export const addMessage = async (messageGroup) => {
   try {
-    const existingGroup = await MessageGroup.findOne({
-      username: messageGroup.username,
-    });
-    if (existingGroup) {
-      existingGroup.messages.push(messageGroup.messages[0]);
-      await existingGroup.save();
+    const allGroups = await MessageGroup.find({});
+    const lastGroup = allGroups[allGroups.length - 1];
+    if (
+      allGroups &&
+      allGroups.length > 0 &&
+      lastGroup.username === messageGroup.username
+    ) {
+      lastGroup.messages.push(messageGroup.messages[0]);
+      await lastGroup.save();
     } else {
       const newMessageGroup = new MessageGroup(messageGroup);
       await newMessageGroup.save();
