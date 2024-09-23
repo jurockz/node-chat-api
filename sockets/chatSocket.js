@@ -6,7 +6,8 @@ export const setupChatSocket = (io) => {
   chatNamespace.on("connection", (socket) => {
     console.log("A user connected");
 
-    socket.on("sendMessage", (messageGroup) => {
+    socket.on("sendMessage", (messageGroup, callback) => {
+      console.log("MESSAGE_SEND");
       addMessage(messageGroup);
       chatNamespace.emit("all", messageGroup);
     });
