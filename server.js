@@ -3,6 +3,7 @@ import { connectDB } from "./config/db.js";
 import app from "./app.js";
 import { setupChatSocket } from "./sockets/chatSocket.js";
 import dotenv from "dotenv";
+import messageDeleteCron from "./cron/messageDeleteCron.js";
 
 dotenv.config();
 
@@ -22,3 +23,5 @@ const io = new Server(expressServer, {
 });
 
 setupChatSocket(io);
+
+messageDeleteCron();
